@@ -1,6 +1,6 @@
 ﻿<div class="row h-container">
     <div class="col-md-3">
-        <img src="https://fleep.io/blog/wp-content/uploads/2014/07/github_icon.png" style="width: 100%" />
+        <img src="{{repo.imageUrl}}" style="width: 100%" />
     </div>
     <div class="col-md-9">
 
@@ -9,7 +9,7 @@
         <h1>{{repo.name}}</h1>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-4">
         <div class="form-group">
             <label>Community rating</label>
             <div class="star-rating-container">
@@ -20,24 +20,13 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label>Critic rating</label>
-            <div class="star-rating-container">
-                <span class="glyphicon glyphicon-star star-rating-glyph star-critic-rating" aria-hidden="true"></span>
-                <div class="star-rating-text">
-                    5.6
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3">
+    <div class="col-md-5">
         <div class="form-group">
             <label>Meta rating</label>
             <div class="star-rating-container">
                 <span class="glyphicon glyphicon-star star-rating-glyph star-meta-rating" aria-hidden="true"></span>
                 <div class="star-rating-text">
-                    5.6
+                    {{repo.metarating}}
                 </div>
             </div>
         </div>
@@ -46,25 +35,24 @@
     <div class="col-md-9 col-md-push-3">
         <div class="form-group">
             <label>Your rating</label>
+            <p ng-if="!repo.userReview.hasUserRating">
+                You haven't added a rating yet
+            </p>
             <h3>
-                <span ng-repeat="star in repo.stars">
+                <span ng-repeat="star in repo.userReview.stars">
                     <span class="rating-star glyphicon " ng-class="star.lit ? 'glyphicon-star' : 'glyphicon-star-empty'" ng-click="changeRating($index + 1)" aria-hidden="true"></span>
                 </span>
             </h3>
         </div>
-
-        <input class="btn btn-default" type="button" value="Add a review" />
+        <input type="text" class="form-control" placeholder="Title" ng-model="repo.userReview.title"/>
+        <textarea class="form-control" ng-model="repo.userReview.text">
+        </textarea>
+        <input class="btn btn-default" type="button" value="Add a review" ng-click="saveUserReview()" />
 
         <div class="form-group">
             <label>Repo description</label>
-            <h2>This is the description</h2>
+            <h2>{{repo.description}}</h2>
         </div>
-
-        <div class="form-group">
-            <label>Organization</label>
-            <h2>Microsoft</h2>
-        </div>
-
         <input class="btn btn-default" type="button" value="Watch Repo" />
     </div>
 </div>

@@ -20,34 +20,79 @@ app.controller("RepoController", ["$scope", "$routeParams", "$http", function ($
     $http.get("/repo/" + owner + "/" + repoName).success(function (repoData) {
         console.log(repoData);
         $scope.repo.name = repoData.Name;
+        $scope.repo.imageUrl = repoData.AvatarUrl;
+        $scope.repo.description = repoData.Description;
+        $scope.repo.userReview = {
 
+        };
         
+        var updateStars = function (hasRating, rating) {
+            if (!hasRating) {
+                rating = 0;
+            }
 
-        var rating = 5;
-
-        var updateStars = function(rating) {
             var stars = [];
             for (var i = 0; i < 10; i++) {
                 stars[i] = {};
                 var currentStar = i + 1;
                 stars[i].lit = currentStar <= rating;
             }
-            $scope.repo.stars = stars;
+
+            $scope.repo.userReview.stars = stars;
+            $scope.repo.userReview.starRating = rating;
+            $scope.repo.userReview.hasUserRating = hasRating
         }
 
-        updateStars(5);
+        $http.get("/api/reviews/benrafshoon/" + repoData.Id).success(function (reviewData) {
+            console.log(reviewData);
+            if (reviewData.length == 0) {
+                updateStars(false, 0);
+            } else {
+                updateStars(true, reviewData[0].ratingStars);
+                $scope.repo.userReview.id = reviewData[0].id;
+                $scope.repo.userReview.title = reviewData[0].title;
+                $scope.repo.userReview.text = reviewData[0].text;
+                console.log(reviewData[0].id);
+            }
+            
+        });
+
+        $http.get("/api/metarating/" + $scope.repo.name).success(function(metaratingData) {
+            $scope.repo.metarating = metaratingData.toFixed(1);
+        });
+
 
         $scope.changeRating = function (newRating) {
-            $http.post("/api/reviews", {
-                reviewerAlias: "berafs@microsoft.com",
-                ratingStars: newRating,
-                repoId: repoData.Id
-            }).success(function (data) {
-                console.log(data);
-            });
-            updateStars(newRating);
-            $
+            $scope.repo.userReview.starRating = newRating;
+
+            $scope.saveUserReview();
         };
+
+        $scope.saveUserReview = function () {
+            var requestObj = {};
+
+            requestObj.data = {
+                reviewerAlias: "benrafshoon",
+                ratingStars: $scope.repo.userReview.starRating,
+                repoId: repoData.Id,
+                id: $scope.repo.userReview.id,
+                title: $scope.repo.userReview.title,
+                text: $scope.repo.userReview.text
+            };
+
+            if ($scope.repo.userReview.id) {
+                requestObj.method = "PUT",
+                requestObj.url = "/api/reviews/" + $scope.repo.userReview.id
+            } else {
+                requestObj.method = "POST",
+                requestObj.url = "/api/reviews"
+            }
+
+            $http(requestObj).success(function (data) {
+                updateStars(true, $scope.repo.userReview.starRating);
+            });
+            
+        }
 
         $scope.repo.contributers = repoData.Contributors.map(function (aContributer) {
             return {

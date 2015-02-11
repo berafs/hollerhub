@@ -119,6 +119,7 @@ namespace HollerHubProject.Controllers
 
         // PUT: api/Reviews/5
         [ResponseType(typeof(void))]
+        [Route("~/api/reviews/{id}")]
         public IHttpActionResult PutReview(int id, Review review)
         {
             if (!ModelState.IsValid)
