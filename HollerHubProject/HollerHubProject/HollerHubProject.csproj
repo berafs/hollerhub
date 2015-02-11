@@ -111,6 +111,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Frontend\css\bootstrap-theme.css" />
+    <Content Include="Frontend\css\bootstrap-theme.min.css" />
+    <Content Include="Frontend\css\bootstrap.css" />
+    <Content Include="Frontend\css\bootstrap.min.css" />
+    <Content Include="Frontend\css\styles.css" />
+    <Content Include="Frontend\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Frontend\Home.html" />
+    <Content Include="Frontend\Index.html" />
+    <Content Include="Frontend\js\angular-route.min.js" />
+    <Content Include="Frontend\js\angular.min.js" />
+    <Content Include="Frontend\js\bootstrap.js" />
+    <Content Include="Frontend\js\bootstrap.min.js" />
+    <Content Include="Frontend\js\Controllers.js" />
+    <Content Include="Frontend\js\less.min.js" />
+    <Content Include="Frontend\js\npm.js" />
+    <Content Include="Frontend\Repo.html" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -135,6 +151,15 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config" />
+    <Content Include="Frontend\css\bootstrap-theme.css.map" />
+    <Content Include="Frontend\css\bootstrap.css.map" />
+    <Content Include="Frontend\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Frontend\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Frontend\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Frontend\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Frontend\js\angular-route.min.js.map" />
+    <Content Include="Frontend\js\angular.min.js.map" />
+    <Content Include="Frontend\less\styles.less" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
