@@ -9,12 +9,21 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using HollerHubProject.Models;
+using Newtonsoft.Json.Linq;
 
 namespace HollerHubProject.Controllers
 {
     public class ReviewsController : ApiController
     {
         private HollerHubProjectContext db = new HollerHubProjectContext();
+        private Uri gitHubBaseUri = new Uri("https://api.github.com");
+        const string repoFmt = "/repos/{0}/{1}";
+        const string contribFmt = "/repos/{0}/{1}/contributors";
+        const string userFmt = "/users/{0}";
+        const string userRepoFmt = "/users/{0}/repos";
+
+        const string auth = "?client_id=1c230d149965dc938e05&client_secret=506ff51bd78e776444a33b2b3d63049fe4118063";
+
 
         // GET: api/Reviews
         public IQueryable<Review> GetReviews()
@@ -39,8 +48,60 @@ namespace HollerHubProject.Controllers
         [Route("~/api/Reviews/{id}")]
         public IQueryable<Review> GetReviews(int id)
         {
-            return db.Reviews.Where(q => q.RepoId == id); ;
+            return db.Reviews.Where(q => q.RepoId == id);
         }
+
+
+        [HttpGet]
+        [Route("~/api/MetaRating/{owner}/{name}")]
+        public double GetMetaRating(string owner, string name)
+        {
+            var client = new HttpClient() { BaseAddress = gitHubBaseUri };
+            //client.DefaultRequestHeaders.Add("Accept", "application/json");
+            client.DefaultRequestHeaders.Add("User-Agent", "Fiddler");
+            client.DefaultRequestHeaders.Remove("Connection");
+
+            //get the repo json and parse it
+            var repoContent = client.GetStringAsync(string.Format(repoFmt, owner, name) + auth);
+            var repoResult = repoContent.Result;
+            JToken repoToken = JObject.Parse(repoResult);
+            //populate the repo object
+            var id = (int)repoToken.SelectToken("id");
+            var forks = (int)repoToken.SelectToken("forks");
+            var stargazers= (int)repoToken.SelectToken("stargazers_count");
+            var subscribers = (int)repoToken.SelectToken("subscribers_count");
+            var wiki = (bool)repoToken.SelectToken("has_wiki");
+
+            var total = 0.0;
+
+            var forkStarRatio = forks / (double)stargazers;
+            var forksSubRatio = forks / (double)subscribers;
+            var hasWiki = wiki ? 1 : 0;
+            var sum = (forks + stargazers + subscribers)/100000.0 * 2.0;
+
+            if (forkStarRatio > .25)
+                total += 4;
+            else if (forkStarRatio >= .20)
+                total += 3;
+            else if (forkStarRatio >= .1)
+                total += 2;
+            else
+                total += 1;
+
+            if (forksSubRatio > 1.5)
+                total += 3;
+            else if (forksSubRatio >= 1)
+                total += 2;
+            else
+                total += 1;
+
+            total += hasWiki;
+            total += sum;
+
+            return total;
+        }
+
+
 
         //// GET: api/Reviews/5
         //[ResponseType(typeof(Review))]
