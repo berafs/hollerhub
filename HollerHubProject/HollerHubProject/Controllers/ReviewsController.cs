@@ -22,18 +22,27 @@ namespace HollerHubProject.Controllers
             return db.Reviews;
         }
 
-        // GET: api/Reviews/5
+        //GET: api/Reviews/5
+        //returns reviews based on the given repo id
         [ResponseType(typeof(Review))]
-        public IHttpActionResult GetReview(int id)
+        public IQueryable<Review> GetReviews(int id)
         {
-            Review review = db.Reviews.Find(id);
-            if (review == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(review);
+            return db.Reviews.Where(q=> q.RepoId == id);;
         }
+
+        //// GET: api/Reviews/5
+        //[ResponseType(typeof(Review))]
+        //public IHttpActionResult GetReview(int id)
+        //{
+        //    Review review = db.Reviews.Find(id);
+
+        //    if (review == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return Ok(review);
+        //}
 
         // PUT: api/Reviews/5
         [ResponseType(typeof(void))]
