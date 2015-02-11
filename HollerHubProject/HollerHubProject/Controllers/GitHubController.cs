@@ -50,6 +50,7 @@ namespace HollerHubProject.Controllers
             repo.AvatarUrl = (string)repoToken.SelectToken("owner").SelectToken("avatar_url");
             repo.HasWiki = (bool)repoToken.SelectToken("has_wiki");
             repo.RepoUrl = (string)repoToken.SelectToken("url");
+            repo.Description = (string)repoToken.SelectToken("description");
 
             //get the contributors associated with the repo and parse it
             var contribContent = client.GetStringAsync(makeContribRequestUri(owner, name));
