@@ -8,9 +8,9 @@ namespace HollerHubProject.Models
 {
     public class Review
     {
+        [Required] 
         public int Id { get; set; }
-        [Required]
-        public string Title { get; set; }
+        public string Title { get; set; } 
         public string Text { get; set; }
         public string ReviewerAlias { get; set; }
         public double RatingStars { get; set; }
@@ -25,6 +25,7 @@ namespace HollerHubProject.Models
             RatingStars = stars;
             RepoId = repoid;
         }
+
         public Review()
         {
 
