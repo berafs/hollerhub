@@ -128,6 +128,7 @@
     <Content Include="Frontend\js\npm.js" />
     <Content Include="Frontend\Repo.html" />
     <Content Include="Global.asax" />
+    <Content Include="Resources\logo.png" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
