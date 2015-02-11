@@ -37,3 +37,9 @@ C:\Users\kauhlenh\Desktop\hollerhub\HollerHubProject\HollerHubProject\obj\Debug\
 C:\Users\kauhlenh\Desktop\hollerhub\HollerHubProject\HollerHubProject\obj\Debug\ApplicationInsights.config
 C:\Users\kauhlenh\Desktop\hollerhub\HollerHubProject\HollerHubProject\obj\Debug\HollerHubProject.dll
 C:\Users\kauhlenh\Desktop\hollerhub\HollerHubProject\HollerHubProject\obj\Debug\HollerHubProject.pdb
+C:\Users\kauhlenh\Desktop\hollerhub\HollerHubProject\HollerHubProject\bin\EntityFramework.dll
+C:\Users\kauhlenh\Desktop\hollerhub\HollerHubProject\HollerHubProject\bin\EntityFramework.SqlServer.dll
+C:\Users\kauhlenh\Desktop\hollerhub\HollerHubProject\HollerHubProject\bin\EntityFramework.xml
+C:\Users\kauhlenh\Desktop\hollerhub\HollerHubProject\HollerHubProject\bin\EntityFramework.SqlServer.xml
+C:\Users\kauhlenh\Desktop\hollerhub\HollerHubProject\HollerHubProject\obj\Debug\HollerHubProject.Migrations.Initial.resources
+C:\Users\kauhlenh\Desktop\hollerhub\HollerHubProject\HollerHubProject\obj\Debug\HollerHubProject.csproj.GenerateResource.Cache
