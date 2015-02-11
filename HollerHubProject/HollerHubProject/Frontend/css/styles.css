@@ -13,6 +13,9 @@
     text-decoration: none;
 }
 
+.rating-star {
+    cursor: pointer;
+}
 
 .star-rating-container {
     position: relative;
