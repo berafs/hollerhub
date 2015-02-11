@@ -23,11 +23,23 @@ namespace HollerHubProject.Controllers
         }
 
         //GET: api/Reviews/5
+        //returns user review for specified repo
+        [HttpGet]
+        [Route("~/api/Reviews/{alias}/{id}")]
+        [ResponseType(typeof(Review))]
+        public IQueryable<Review> GetReviews(string alias, int id)
+        {
+            return db.Reviews.Where(q => q.ReviewerAlias==alias).Where(q=>q.RepoId == id);
+        }
+
+        //GET: api/Reviews/5
         //returns reviews based on the given repo id
         [ResponseType(typeof(Review))]
+        [HttpGet]
+        [Route("~/api/Reviews/{id}")]
         public IQueryable<Review> GetReviews(int id)
         {
-            return db.Reviews.Where(q=> q.RepoId == id);;
+            return db.Reviews.Where(q => q.RepoId == id); ;
         }
 
         //// GET: api/Reviews/5
