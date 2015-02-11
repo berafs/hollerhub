@@ -14,6 +14,7 @@ namespace HollerHubProject.Models
         public string Text { get; set; }
         public string ReviewerAlias { get; set; }
         public double RatingStars { get; set; }
+        [Required]
         public int RepoId { get; set; }
 
         public Review(int id, string title, string text, string alias, double stars, int repoid)
