@@ -21,6 +21,8 @@ app.controller("RepoController", ["$scope", "$routeParams", "$http", function ($
         console.log(repoData);
         $scope.repo.name = repoData.Name;
 
+        
+
         var rating = 5;
 
         var updateStars = function(rating) {
@@ -35,9 +37,25 @@ app.controller("RepoController", ["$scope", "$routeParams", "$http", function ($
 
         updateStars(5);
 
-        $scope.changeRating = function (index) {
-            updateStars(index);
+        $scope.changeRating = function (newRating) {
+            $http.post("/api/reviews", {
+                reviewerAlias: "berafs@microsoft.com",
+                ratingStars: newRating,
+                repoId: repoData.Id
+            }).success(function (data) {
+                console.log(data);
+            });
+            updateStars(newRating);
+            $
         };
+
+        $scope.repo.contributers = repoData.Contributors.map(function (aContributer) {
+            return {
+                username: aContributer.Login,
+                imageUrl: aContributer.AvatarUrl,
+                githubProfileUrl: aContributer.ProfileUrl
+            };
+        });
 
         $http.get("/api/reviews/" + repoData.Id).success(function (reviewsData) {
             console.log(reviewsData);
@@ -46,6 +64,11 @@ app.controller("RepoController", ["$scope", "$routeParams", "$http", function ($
             }, 0.0);
             var average = sum / reviewsData.length;
             $scope.repo.communityRating = average.toFixed(1);
+
+            $scope.repo.reviews = reviewsData.map(function (aReview) {
+                return aReview;
+            });
+
             console.log(average);
         });
     });

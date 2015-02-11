@@ -69,10 +69,33 @@
     </div>
 </div>
 <div class="row h-container">
+    <h1>Reviews</h1>
+    <div ng-repeat="review in repo.reviews">
+        <div class=" form-group">
+            <label>Reviewer</label>
+            <p>{{review.reviewerAlias}}</p>
+        </div>
+        <div class=" form-group">
+            <label>Title</label>
+            <p>{{review.title}}</p>
+        </div>
+        <div class=" form-group">
+            <label>Review Text</label>
+            <p>{{review.text}}</p>
+        </div>
+        <div class=" form-group">
+            <label>Rating</label>
+            <p>{{review.ratingStars}}</p>
+        </div>
+
+    </div>
+</div>
+<div class="row h-container">
     <h1>Contributors</h1>
     <div>
-        <h2>Ben Rafshoon</h2>
-        <h2>Kasey Uhlenhuth</h2>
-        <h2>Dylan Hirshkowitz</h2>
+        <h2 ng-repeat="contributer in repo.contributers">
+            <img height="100px" src="{{contributer.imageUrl}}" /> 
+            {{contributer.username}}
+        </h2>
     </div>
 </div>
